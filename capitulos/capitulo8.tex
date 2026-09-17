@@ -1,0 +1,121 @@
+\chapter{Algoritmos sobre Grafos}
+
+\section{Camino más Corto}
+
+\subsection{Algoritmo de Dijkstra}
+
+\begin{algorithm}[H]
+\caption{Algoritmo de Dijkstra}
+\label{alg:dijkstra}
+\begin{algorithmic}[1]
+\Require Un grafo ponderado $G=(V,E)$ y un vértice origen $s$
+\Ensure Distancias mínimas desde $s$ a todos los vértices
+\State dist$[v] \gets \infty$ para todo $v \in V$
+\State dist$[s] \gets 0$
+\State $S \gets \emptyset$
+\State $Q \gets V$
+\While{$Q \neq \emptyset$}
+  \State $u \gets \arg\min_{v \in Q} \text{dist}[v]$
+  \State $Q \gets Q \setminus \{u\}$
+  \State $S \gets S \cup \{u\}$
+  \For{cada $v \in \text{adyacentes}(u)$}
+    \If{$\text{dist}[v] > \text{dist}[u] + w(u,v)$}
+      \State $\text{dist}[v] \gets \text{dist}[u] + w(u,v)$
+    \EndIf
+  \EndFor
+\EndWhile
+\State \Return dist
+\end{algorithmic}
+\end{algorithm}
+
+\section{Árboles Generadores Mínimos}
+
+\subsection{Algoritmo de Prim}
+
+\begin{algorithm}[H]
+\caption{Algoritmo de Prim}
+\label{alg:prim}
+\begin{algorithmic}[1]
+\Require Un grafo ponderado conexo $G=(V,E)$
+\Ensure Un árbol generador mínimo $T$
+\State $T \gets \emptyset$
+\State $S \gets \{v_0\}$
+\While{$S \neq V$}
+  \State Encontrar $(u,v)$ de peso mínimo con $u \in S$, $v \notin S$
+  \State $S \gets S \cup \{v\}$
+  \State $T \gets T \cup \{(u,v)\}$
+\EndWhile
+\State \Return $T$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Algoritmo de Kruskal}
+
+\begin{algorithm}[H]
+\caption{Algoritmo de Kruskal}
+\label{alg:kruskal}
+\begin{algorithmic}[1]
+\Require Un grafo ponderado conexo $G=(V,E)$
+\Ensure Un árbol generador mínimo $T$
+\State $T \gets \emptyset$
+\State Ordenar $E$ por peso ascendente
+\For{cada $(u,v) \in E$ en orden}
+  \If{$u$ y $v$ están en componentes diferentes}
+    \State $T \gets T \cup \{(u,v)\}$
+    \State Unir componentes de $u$ y $v$
+  \EndIf
+\EndFor
+\State \Return $T$
+\end{algorithmic}
+\end{algorithm}
+
+\section{Redes de Transporte}
+
+\subsection{Teorema de Flujo Máximo - Corte Mínimo}
+El valor del flujo máximo en una red es igual a la capacidad del corte mínimo.
+
+\subsection{Algoritmo de Ford-Fulkerson}
+
+\begin{algorithm}[H]
+\caption{Ford-Fulkerson}
+\label{alg:ford-fulkerson}
+\begin{algorithmic}[1]
+\Require Una red con fuente $s$, sumidero $t$, y capacidades $c$
+\Ensure Flujo máximo
+\State flujo$[v][u] \gets 0$ para todo $u,v$
+\While{existe camino de aumento $P$ de $s$ a $t$}
+  \State Encontrar la capacidad residual mínima en $P$
+  \State Actualizar flujo en $P$
+\EndWhile
+\State \Return flujo
+\end{algorithmic}
+\end{algorithm}
+
+\section{Implementación en Haskell}
+
+\begin{lstlisting}[caption={Algoritmos de grafos en Haskell}, label=lst:algoritmos-grafos]
+import Data.Map (Map, fromList, insert, lookup, delete, keys, (!))
+import qualified Data.Map as Map
+import Data.Set (Set, singleton, member, insert, delete, empty)
+import qualified Data.Set as Set
+
+-- Dijkstra (version funcional simplificada)
+dijkstra :: (Ord a) => a -> [(a, [(a, Int)])] -> Map a Int
+dijkstra inicio grafo = dijkstraAux inicio grafo Map.empty (Set.singleton inicio)
+  where
+    dijkstraAux origen grafo dist pendientes
+      | Set.null pendientes = dist
+      | otherwise =
+          let (u, du) = minimo pendientes dist
+              vecinos = adyacentesConPeso u grafo
+              dist' = actualizar vecinos du dist
+              pendientes' = Set.insert (Set.delete u pendientes) vecinos
+          in dijkstraAux origen grafo dist' pendientes'
+\end{lstlisting}
+
+\section{Ejercicios}
+\begin{enumerate}
+  \item Ejecutar el algoritmo de Dijkstra en un grafo de ejemplo.
+  \item Demostrar que el algoritmo de Prim encuentra un árbol generador mínimo.
+  \item Implementar el algoritmo de Kruskal en Haskell.
+\end{enumerate}

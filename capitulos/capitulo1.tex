@@ -1,0 +1,182 @@
+\chapter{Combinatoria}
+
+Aunque la enumeración o conteo se percibe como un concepto básico de la aritmética, su importancia y complejidad suelen subestimarse en áreas matemáticas más avanzadas y en aplicaciones como la teoría de códigos, la probabilidad y el análisis de algoritmos. Este texto advierte que, a pesar de la sencillez aparente de los problemas de conteo, estos requieren un análisis profundo y creativo, por lo que es esencial comprender los principios fundamentales en lugar de confiar únicamente en fórmulas, fomentando así el desarrollo de soluciones propias y el abordaje de problemas desde múltiples perspectivas.
+
+\section{Principio de la multiplicación}
+
+Si una actividad se puede realizar en $t$ pasos sucesivos, y si el paso 1 se puede hacer de $n_1$ maneras diferentes, el paso 2 se puede realizar de $n_2$ maneras, \ldots, así sucesivamente hasta el paso $t$ que se puede realizar de $n_t$ maneras, entonces el número de actividades posibles diferentes es $n_1 \cdot n_2 \cdots n_t$.
+
+\begin{ejemplo}
+En Picantería Tradicional de Arequipa se muestra la siguiente carta para el almuerzo del día Lunes:
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{ENTRADA} & \multicolumn{2}{c|}{PLATO DE FONDO} & \multicolumn{2}{c|}{BEBIDAS} \\
+\hline
+Soltero de queso & 5 & Rocoto Relleno & 35 & Chicha Morada & 10 \\
+Escribano & 4 & Chicharrón & 30 & Jugo de Papaya & 15 \\
+ & & Chupe de Camarones & 50 & Gaseosa & 3 \\
+ & & & & Copa de Vino & 16 \\
+\hline
+\end{tabular}
+\end{center}
+
+¿De cuántas se puede seleccionar un Plato de Fondo y una Bebida? \\
+\textbf{Respuesta} $= 3 \cdot 4 = 12$.
+
+¿De cuántas formas se seleccionar una Entrada, un Plato de Fondo y una Bebida? \\
+\textbf{Respuesta} $= 2 \cdot 3 \cdot 4 = 24$.
+\end{ejemplo}
+
+\begin{ejemplo}
+\begin{enumerate}[label=\alph*)]
+  \item ¿Cuántas cadenas de longitud 4 se pueden formar usando las letras ABCDE si no se aceptan repeticiones?
+  \item ¿Cuántas cadenas del inciso a) comienzan con la letra B?
+  \item ¿Cuántas cadenas del inciso a) no comienzan con la letra B?
+\end{enumerate}
+\textbf{Solución:}
+\begin{enumerate}[label=\alph*)]
+  \item $5 \cdot 4 \cdot 3 \cdot 2 = 120$.
+  \item $1 \cdot 4 \cdot 3 \cdot 2 = 24$.
+  \item $120 - 24 = 96$.
+\end{enumerate}
+\end{ejemplo}
+
+\begin{ejemplo}
+¿Cuántos subconjuntos tiene el conjunto $A = \{a_1, a_2, \ldots, a_n\}$? \\
+\textbf{Solución:} Un subconjunto se construye en $n$ pasos sucesivos: se elige o no se elige $a_1$; se elige o no $a_2$; \ldots; se elige o no $a_n$. Cada paso se puede realizar de dos maneras. Entonces, el número de subconjuntos posibles es
+\[
+\underbrace{2 \cdot 2 \cdots 2}_{n \text{ factores}} = 2^n.
+\]
+\end{ejemplo}
+
+\section{Principio de la Suma}
+
+Suponga que $X_1, X_2, \ldots, X_t$ son conjuntos y que el $i$-ésimo conjunto $X_i$ tiene $n_i$ elementos. Si $X_1, X_2, \ldots, X_t$ es una familia de conjuntos ajenos por pares (es decir, si $i \neq j$, $X_i \cap X_j = \emptyset$), el número de elementos posibles que se puede seleccionar de $X_1$ ó $X_2$ ó $\cdots$ ó $X_t$ es $n_1 + n_2 + \cdots + n_t$.
+
+\begin{ejemplo}
+¿Cuántas cadenas de ocho bits comienzan con 101 o con 111?
+\[
+\text{Respuesta} = 2^5 + 2^5 = 64.
+\]
+\end{ejemplo}
+
+\begin{ejemplo}
+¿De cuántas maneras se pueden seleccionar dos libros de temas diferentes entre cinco libros de computación distintos, tres libros de matemáticas diferentes y dos libros de arte distintos?
+\[
+\text{Respuesta} = 5\cdot3 + 5\cdot2 + 3\cdot2 = 15+10+6 = 31.
+\]
+\end{ejemplo}
+
+\begin{ejemplo}
+El centro de estudiantes de la EPCC compuesto por Andrea, Joshua, Consuelo, Piero, Nathaly y MaryCielo, debe seleccionar un presidente, secretario y tesorero.
+\begin{enumerate}[label=\arabic*.]
+  \item ¿De cuántas maneras pueden hacer esto?
+  \item ¿De cuántas maneras pueden hacerlo si Alicia o Benjamín debe ser el presidente?
+  \item ¿De cuántas maneras pueden hacerlo si Eduardo debe ocupar uno de los puestos?
+  \item ¿De cuántas maneras pueden hacerlo si tanto Adolfo como Francisco deben ocupar un puesto?
+\end{enumerate}
+\textbf{Respuestas:}
+\begin{enumerate}[label=\arabic*.]
+  \item $6 \cdot 5 \cdot 4 = 120$.
+  \item $20+20 = 40$.
+  \item $3 \cdot 5 \cdot 4 = 60$.
+  \item $3 \cdot 2 \cdot 4 = 24$.
+\end{enumerate}
+\end{ejemplo}
+
+\begin{definicion}
+Una \textbf{permutación} de $n$ elementos diferentes $x_1, x_2, \ldots, x_n$ es un ordenamiento de los $n$ elementos.
+\end{definicion}
+
+\begin{ejemplo}
+Existen seis permutaciones de las letras A, B, C: ABC, ACB, BAC, BCA, CAB, CBA.
+\end{ejemplo}
+
+\begin{teorema}
+Existen $n!$ permutaciones de $n$ elementos.
+\end{teorema}
+\begin{proof}
+De acuerdo con el principio de la multiplicación, el número de permutaciones de $n$ elementos es
+\[
+n(n-1)(n-2)\cdots 3\cdot 2\cdot 1 = n!.
+\]
+\end{proof}
+
+\begin{definicion}
+Una \textbf{permutación r} de $n$ elementos (distintos) $x_1, x_2, \ldots, x_n$ es un ordenamiento de $r$ elementos de $\{x_1, x_2, \ldots, x_n\}$. El número de permutaciones $r$ de un conjunto de $n$ elementos diferentes se denota por $P(n,r)$.
+\end{definicion}
+
+\begin{teorema}
+El número de permutaciones $r$ de un conjunto de $n$ objetos diferentes es:
+\[
+P(n,r) = \frac{n!}{(n-r)!}, \quad r \leq n.
+\]
+\end{teorema}
+
+\begin{ejemplo}
+¿De cuántas maneras se puede seleccionar el presidente, vicepresidente, secretario y tesorero del Centro de Estudiantes de la EPCC de los 10 delegados de las 5 promociones del pregrado?
+\[
+P(10,4) = \frac{10!}{6!} = 10\cdot 9\cdot 8\cdot 7 = 5040.
+\]
+\end{ejemplo}
+
+\begin{ejemplo}
+¿De cuántas maneras pueden hacer cola siete marcianos y cinco venusinos si dos venusinos no se paran juntos?
+\[
+\text{Posiciones para venusinos} = P(8,5) = 8\cdot 7\cdot 6\cdot 5\cdot 4 = 6720,
+\]
+luego el total es $7! \cdot 6720 = 33\,868\,800$.
+\end{ejemplo}
+
+\begin{definicion}
+Dado un conjunto $X = \{x_1, x_2, \ldots, x_n\}$ con $n$ elementos:
+\begin{itemize}
+  \item Una \textbf{combinación r} de $X$ es una selección no ordenada de $r$ elementos de $X$ (es decir, un subconjunto de $X$ de $r$ elementos).
+  \item El número de combinaciones $r$ de un conjunto de $n$ elementos se denota con $C(n,r)$ ó $\binom{n}{r}$.
+\end{itemize}
+\end{definicion}
+
+\begin{teorema}
+El número de combinaciones $r$ de un conjunto de $n$ objetos distintos es:
+\[
+C(n,r) = \frac{n!}{(n-r)!\,r!}.
+\]
+\end{teorema}
+
+\begin{ejemplo}
+¿De cuántas maneras elegir tres representantes para hablar con el Director de la EPCC y solicitar talleres de programación funcional, de un total de 5 delegados estudiantiles?
+\[
+C(5,3) = \frac{5!}{2!\,3!} = 10.
+\]
+\end{ejemplo}
+
+\begin{ejemplo}
+¿De cuántas maneras se puede seleccionar un comité de dos mujeres y tres hombres de un grupo de cinco mujeres y seis hombres?
+\[
+C(5,2)\,C(6,3) = 10 \cdot 20 = 200.
+\]
+\end{ejemplo}
+
+\begin{ejemplo}
+¿Cuántas cadenas de ocho bits contienen exactamente cuatro unos?
+\[
+C(8,4) = 70.
+\]
+\end{ejemplo}
+
+\begin{ejemplo}
+Una baraja común de 52 cartas consiste en cuatro palos: tréboles, diamantes, corazones y espadas, con 13 denominaciones cada uno (as, 2 a 10, jack, reina y rey).
+\begin{enumerate}[label=\alph*)]
+  \item ¿Cuántas manos de póquer (sin ordenar) de cinco cartas existen?
+  \item ¿Cuántas manos contienen cartas todas del mismo palo?
+  \item ¿Cuántas manos contienen tres cartas de una denominación y dos de una segunda denominación?
+\end{enumerate}
+\textbf{Solución:}
+\begin{enumerate}[label=\alph*)]
+  \item $C(52,5) = 2\,598\,960$.
+  \item $4 \cdot C(13,5) = 5148$.
+  \item $13 \cdot 12 \cdot C(4,3) \cdot C(4,2) = 3744$.
+\end{enumerate}
+\end{ejemplo}

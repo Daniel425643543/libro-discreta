@@ -1,0 +1,149 @@
+\chapter{Guía de Práctica 1: Técnicas Avanzadas de Conteo}
+
+\section{Objetivos}
+Al finalizar esta guía, el estudiante será capaz de:
+\begin{itemize}
+  \item Aplicar los principios básicos de combinatoria para resolver problemas de conteo.
+  \item Establecer y resolver relaciones de recurrencia a partir de problemas del mundo real.
+  \item Utilizar funciones generatrices para resolver problemas de distribución y partición.
+  \item Analizar la complejidad de algoritmos recursivos e iterativos mediante relaciones de recurrencia.
+\end{itemize}
+
+\section{Principios Básicos de Combinatoria}
+\subsection{Ejercicios}
+\begin{enumerate}
+  \item El sistema Braille para representar caracteres fue desarrollado a principios del siglo XIX por Louis Braille. Los caracteres especiales para el invidente consisten en puntos en relieve. Las posiciones para los puntos se seleccionan en dos columnas verticales de tres puntos cada una. Debe haber al menos un punto en relieve. ¿Cuántos caracteres distintos de Braille puede haber?
+  \item ¿Cuántas placas de automóvil se pueden hacer que contengan tres letras seguidas de dos dígitos si se permite que haya repeticiones? ¿Y si no hay repeticiones?
+  \item Encuentre el número de manos de póquer de 5 cartas (sin ordenar), seleccionadas de una baraja común de 52 cartas, que tengan las propiedades indicadas:
+    \begin{enumerate}[label=\alph*)]
+      \item Contienen 4 de un tipo, es decir, cuatro cartas de la misma denominación.
+      \item De la forma A2345 del mismo palo (escalera de color).
+      \item Contienen 2 de una denominación, 2 de otra y 1 de una tercera denominación.
+    \end{enumerate}
+  \item Una moneda se lanza 10 veces. ¿Cuántos resultados tienen exactamente tres caras?
+  \item ¿Cuántas cadenas de 8 bits contienen a lo más 3 ceros?
+  \item ¿De cuántas maneras se puede elegir un comité de 4 republicanos, 3 demócratas y 2 independientes, entre un grupo de 10 republicanos, 12 demócratas y 6 independientes?
+  \item La palabra clave para acceder a un servidor de Internet está formada por 4 caracteres que se pueden elegir entre 26 letras minúsculas y 10 dígitos. Calcular el número de palabras clave que se pueden formar:
+    \begin{enumerate}[label=\alph*)]
+      \item Sin ninguna restricción.
+      \item Usando solamente letras, sin repetirlas.
+      \item Usando al menos un dígito.
+    \end{enumerate}
+  \item Cuatro libros distintos de matemáticas, seis diferentes de física y dos diferentes de química se colocan en un estante. ¿De cuántas formas distintas es posible ordenarlos si:
+    \begin{enumerate}[label=\alph*)]
+      \item Los libros de cada asignatura deben estar todos juntos.
+      \item Solamente los libros de matemáticas deben estar juntos.
+    \end{enumerate}
+  \item Determine cuántas cadenas se pueden formar ordenando las letras ABCDEF sujetas a las condiciones indicadas:
+    \begin{enumerate}[label=\alph*)]
+      \item A aparece antes que D.
+      \item Contiene ya sea la subcadena DB o la subcadena BE.
+    \end{enumerate}
+  \item ¿De cuántas formas se pueden repartir 25 rosquillas iguales entre Alan, Octavio, Carlos y Ronald si cada uno recibe al menos tres, pero no más de 8 rosquillas?
+\end{enumerate}
+
+\section{Relaciones de Recurrencia}
+\subsection{Ejercicios}
+\begin{enumerate}
+  \item Sea $R_n$ el número de regiones en las que se divide el plano por $n$ líneas. Suponga que cada par de líneas se interseca en un punto, pero que nunca se intersecan tres líneas en un punto.
+    \begin{enumerate}[label=\alph*)]
+      \item Calcular $R_1, R_2, R_3$.
+      \item Establezca una relación de recurrencia para la sucesión $\{R_n\}$.
+    \end{enumerate}
+  \item Si $\alpha$ es una cadena de bits, sea $C(\alpha)$ el número máximo de ceros consecutivos en $\alpha$. Ejemplos: $C(10010)=2$, $C(00110001)=3$. Sea $S_n$ el número de cadenas $\alpha$ de $n$ bits con $C(\alpha) \leq 2$. Desarrolle una relación de recurrencia para $S_1, S_2, \ldots$
+  \item Resuelva las siguientes relaciones de recurrencia:
+    \begin{enumerate}[label=\alph*)]
+      \item $2a_n = 7a_{n-1} - 3a_{n-2} + 2^n$
+      \item $a_n = a_{n-1} + 1 + 2^{n-1}$, con $a_0 = 2$
+      \item $a_n = a_{n-1} + 6a_{n-2} + 3^n$
+      \item $a_n = a_{n-1} + 1 + 2^{n-1}$, con $a_0 = 1$
+      \item $a_n = 2na_{n-1}$, con $a_0 = 1$
+    \end{enumerate}
+  \item Resuelva la relación de recurrencia $a_n = 2n a_{n-1}$, $n>0$, con la condición inicial $a_0 = 1$.
+  \item Si $\alpha$ es una cadena de $n$ bits, sea $C(\alpha)$ el número máximo de ceros consecutivos en $\alpha$ (por ejemplo, $C(0011000011) = 4$). Sea $S_n$ el número de cadenas $\alpha$ de $n$ bits con $C(\alpha) \leq 2$. Encuentre la relación de recurrencia para la sucesión $S_1, S_2, \ldots$
+\end{enumerate}
+
+\section{Funciones Generatrices}
+\subsection{Ejercicios}
+\begin{enumerate}
+  \item ¿De cuántas formas se pueden asignar dos docenas de robots idénticos a cuatro líneas de ensamble de modo que:
+    \begin{enumerate}[label=\alph*)]
+      \item Al menos tres robots se asignen a cada línea.
+      \item Al menos tres, pero no más de nueve robots se asignen a cada línea.
+    \end{enumerate}
+  \item ¿De cuántas formas pueden separarse 300 sobres idénticos en paquetes de 25 entre cuatro grupos de estudiantes, de modo que cada grupo tenga al menos 150, pero no más de 1000 sobres?
+  \item Encuentre la función generatriz para el número de formas de distribuir $n$ objetos idénticos en $k$ cajas distintas, donde cada caja debe tener al menos un objeto.
+  \item Utilice funciones generatrices para resolver el problema: ¿De cuántas formas se pueden elegir 5 frutas de una canasta que contiene manzanas, naranjas y peras, si hay al menos 5 de cada una?
+\end{enumerate}
+
+\section{Análisis de Algoritmos}
+\subsection{Ejercicios}
+\begin{enumerate}
+  \item Encuentre una notación $\Theta$ para las siguientes expresiones:
+    \begin{enumerate}[label=\alph*)]
+      \item $(n+1)(n+3)$
+      \item $2\log n + 4n + 5n\log n$
+    \end{enumerate}
+  \item Determine el orden para la función que cuenta el número de veces que se ejecuta la asignación en los siguientes algoritmos:
+    \begin{enumerate}[label=\alph*)]
+      \item \texttt{for i = 1 to n \\ for j = 1 to i \\ for k = 1 to j \\ x = x + 1}
+      \item \texttt{for i = 1 to 2n \\ for j = 1 to n \\ x = x + 1}
+    \end{enumerate}
+  \item Dado el algoritmo recursivo para encontrar el máximo y mínimo de una sucesión (Algoritmo 10 del PDF):
+    \begin{enumerate}[label=\alph*)]
+      \item Sea $b_n$ el número de veces que se hace la comparación en las líneas 10 y 14. Encuentre $b_1, b_2, b_3, b_4$.
+      \item Encuentre una relación de recurrencia para $(b_n)$.
+      \item Resuelva la relación.
+      \item Conjeture el orden de $b_n$.
+    \end{enumerate}
+  \item Dado el algoritmo de ordenamiento por inserción (Algoritmo 11 del PDF):
+    \begin{enumerate}[label=\alph*)]
+      \item Sea $b_n$ el número de veces que se hace la comparación en la línea 7 en el peor caso. Encuentre $b_1, b_2, b_3, b_4$.
+      \item Encuentre una relación de recurrencia para $(b_n)$.
+      \item Resuelva la relación.
+      \item ¿Cuál es el orden del algoritmo?
+    \end{enumerate}
+  \item Algoritmo de evaluación de polinomios (Algoritmo 12 del PDF):
+    \begin{enumerate}[label=\alph*)]
+      \item Calcule $T(1), T(2), T(3)$.
+      \item Encuentre la relación de recurrencia y condición inicial para $T(n)$.
+      \item Resuelva la relación.
+    \end{enumerate}
+  \item Algoritmo de exponenciación rápida (Algoritmo 13 del PDF):
+    \begin{enumerate}[label=\alph*)]
+      \item Sea $b_n$ el número de multiplicaciones. Encuentre $b_1, b_2, b_3, b_4$.
+      \item Encuentre una relación de recurrencia para $(b_n)$.
+      \item Resuelva para el caso en que $n$ es potencia de 2.
+      \item Conjeture la solución general.
+      \item Muestre con un ejemplo que $T(n)$ es no decreciente.
+      \item Demuestre que $T(n) = \Theta(\log n)$.
+    \end{enumerate}
+\end{enumerate}
+
+\section{Problemas Integradores}
+\begin{enumerate}
+  \item Demuestre que el número de formas de distribuir $n$ objetos idénticos en $k$ cajas distintas es $\binom{n+k-1}{k-1}$.
+  \item ¿Cuántos números de 5 dígitos tienen exactamente dos dígitos pares?
+  \item Sea $R_n$ el número de regiones en las que se divide el plano por $n$ líneas. Suponga que cada par de líneas se interseca en un punto, pero que nunca se intersecan tres líneas en un punto.
+    \begin{enumerate}[label=\alph*)]
+      \item Calcular $R_1, R_2, R_3$.
+      \item Establezca una relación de recurrencia para $\{R_n\}$.
+    \end{enumerate}
+  \item El número de formas de distribuir $n$ objetos idénticos en $k$ cajas distintas es $\binom{n+k-1}{k-1}$. Demuestre esta fórmula utilizando funciones generatrices.
+  \item Analice la complejidad del algoritmo de ordenamiento por inserción y demuestre que su complejidad en el peor caso es $O(n^2)$.
+  \item Demuestre que el algoritmo de exponenciación rápida (exp2) tiene complejidad $\Theta(\log n)$.
+\end{enumerate}
+
+\section{Referencias}
+\begin{itemize}
+  \item Richard Johnsonbaugh, \emph{Matemáticas Discretas}, 6ª ed. (2005) - Pearson Prentice Hall.
+  \item Kenneth H. Rosen, \emph{Discrete Mathematics and Its Applications}, 7ª ed. (2012) - McGraw-Hill.
+\end{itemize}
+
+\section{Indicaciones para la Entrega}
+\begin{itemize}
+  \item La guía debe ser entregada el día del examen parcial 1.
+  \item Mostrar todos los procedimientos de manera clara y ordenada.
+  \item Incluir el código Haskell de las implementaciones solicitadas.
+  \item Los ejercicios marcados con (*) son obligatorios para la calificación.
+\end{itemize}

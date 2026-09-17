@@ -1,0 +1,79 @@
+\documentclass[12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands]{babel}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{float}   % <-- añadido para la opción [H] en algoritmos
+
+\usetikzlibrary{babel} % compatibilidad con Babel
+\pgfplotsset{compat=1.18}
+
+% Configuración de listings para Haskell
+\lstset{
+  language=Haskell,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\color{blue},
+  commentstyle=\color{green!60!black},
+  stringstyle=\color{red},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  breaklines=true,
+  frame=single,
+  tabsize=2,
+  showspaces=false,
+  showstringspaces=false
+}
+
+% Configuración de algoritmos
+\algrenewcommand\algorithmicrequire{\textbf{Entrada:}}
+\algrenewcommand\algorithmicensure{\textbf{Salida:}}
+\floatname{algorithm}{Algoritmo}
+
+% Teoremas
+\newtheorem{teorema}{Teorema}[chapter]
+\newtheorem{definicion}{Definición}[chapter]
+\newtheorem{ejemplo}{Ejemplo}[chapter]
+\newtheorem{corolario}{Corolario}[chapter]
+\newtheorem{observacion}{Observación}[chapter]
+\newtheorem{ejercicio}{Ejercicio}[chapter]
+
+% Comandos útiles
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+\begin{document}
+
+\frontmatter
+\include{prefacio}
+\tableofcontents
+
+\mainmatter
+\part{Técnicas Avanzadas de Conteo}
+\include{capitulos/capitulo1}
+\include{capitulos/capitulo2}
+\include{capitulos/capitulo3}
+\include{capitulos/capitulo4}
+
+\part{Teoría de Grafos}
+\include{capitulos/capitulo5}
+\end{document}

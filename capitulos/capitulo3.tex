@@ -1,0 +1,76 @@
+\chapter{Funciones Generatrices}
+
+\section{Funciones generatrices}
+
+\begin{definicion}
+La función
+\[
+f(x) = a_0 + a_1 x + a_2 x^2 + \cdots = \sum_{i=0}^{\infty} a_i x^i
+\]
+es la \textbf{función generatriz} de la sucesión de números reales $a_0, a_1, \ldots$.
+\end{definicion}
+
+\begin{ejemplo}
+Para $\forall n \in \mathbb{Z}^+$,
+\[
+(1+x)^n = \binom{n}{0} + \binom{n}{1}x + \binom{n}{2}x^2 + \cdots + \binom{n}{n}x^n
+\]
+es la función generatriz para la sucesión $\binom{n}{0}, \binom{n}{1}, \ldots, \binom{n}{n}, 0,0,\ldots$
+\end{ejemplo}
+
+\begin{ejemplo}
+\[
+\frac{1}{1-x} = 1 + x + x^2 + x^3 + \cdots
+\]
+es la función generatriz para la sucesión $1,1,1,\ldots$
+\end{ejemplo}
+
+\begin{ejemplo}
+Derivando,
+\[
+\frac{1}{(1-x)^2} = 1 + 2x + 3x^2 + 4x^3 + \cdots
+\]
+y
+\[
+\frac{x}{(1-x)^2} = 0 + 1x + 2x^2 + 3x^3 + \cdots
+\]
+es la función generatriz para $0,1,2,3,\ldots$
+\end{ejemplo}
+
+\begin{ejemplo}
+La función generatriz para los cuadrados $0^2, 1^2, 2^2, \ldots$ es
+\[
+\frac{x(1+x)}{(1-x)^3}.
+\]
+\end{ejemplo}
+
+\begin{table}[h]
+\centering
+\caption{Funciones generatrices fundamentales}
+\begin{tabular}{|c|l|}
+\hline
+\textbf{No.} & \textbf{Función generatriz} \\
+\hline
+1 & $(1+x)^m = \sum_{n=0}^m \binom{m}{n} x^n$ \\
+2 & $(1+ax)^m = \sum_{n=0}^m \binom{m}{n} a^n x^n$ \\
+3 & $(1+x^m)^n = \sum_{k=0}^n \binom{n}{k} x^{mk}$ \\
+4 & $\frac{1-x^{m+1}}{1-x} = 1+x+\cdots+x^m$ \\
+5 & $\frac{1}{1-x} = \sum_{n=0}^{\infty} x^n$ \\
+6 & $\frac{1}{(1-x)^m} = \sum_{n=0}^{\infty} \binom{m+n-1}{n} x^n$ \\
+7 & $\frac{1}{(1+x)^m} = \sum_{n=0}^{\infty} (-1)^n \binom{m+n-1}{n} x^n$ \\
+8 & $e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!}$ \\
+9 & $\ln(1+x) = \sum_{n=1}^{\infty} (-1)^{n+1}\frac{x^n}{n}$ \\
+10 & $\frac{1}{(1-x)^2} = \sum_{n=0}^{\infty} (n+1)x^n$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{ejemplo}
+Mónica compró 12 naranjas para sus hijos Graciela, María y Francisco. ¿De cuántas formas puede distribuir las naranjas de tal forma que Graciela obtenga al menos cuatro y María y Francisco obtengan al menos dos, sin que Francisco obtenga más de cinco?
+
+\textbf{Solución:} La función generatriz es:
+\[
+f(x) = (x^4 + x^5 + \cdots + x^8)(x^2 + \cdots + x^6)(x^2 + \cdots + x^5).
+\]
+Simplificando y usando la serie $\frac{1}{(1-x)^2}$, se obtiene que el coeficiente de $x^{12}$ es 14.
+\end{ejemplo}

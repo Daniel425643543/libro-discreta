@@ -1,0 +1,112 @@
+\chapter{Aritmética Modular}
+
+\section{Introducción}
+La aritmética modular es una de las herramientas matemáticas más importantes en criptografía.
+
+Dos números $a$ y $b$ son \textbf{congruentes módulo $n$} si $n$ divide a $a-b$. Se escribe:
+\[
+a \equiv b \pmod{n}.
+\]
+
+\subsection{Propiedades de la congruencia}
+\begin{enumerate}
+  \item Reflexiva: $a \equiv a \pmod{n}$.
+  \item Simétrica: Si $a \equiv b \pmod{n}$, entonces $b \equiv a \pmod{n}$.
+  \item Transitiva: Si $a \equiv b \pmod{n}$ y $b \equiv c \pmod{n}$, entonces $a \equiv c \pmod{n}$.
+\end{enumerate}
+
+\section{Operaciones Modulares}
+
+\subsection{Suma y resta}
+\[
+a + b \equiv (a \bmod n) + (b \bmod n) \pmod{n}.
+\]
+
+\subsection{Multiplicación}
+\[
+a \cdot b \equiv (a \bmod n) \cdot (b \bmod n) \pmod{n}.
+\]
+
+\subsection{Potenciación modular}
+La potenciación modular es fundamental en criptografía:
+\[
+a^b \bmod n.
+\]
+
+\section{El Algoritmo de Euclides}
+
+\subsection{Algoritmo de Euclides}
+
+\begin{algorithm}[H]
+\caption{Algoritmo de Euclides}
+\label{alg:euclides}
+\begin{algorithmic}[1]
+\Require $a,b \in \mathbb{Z}$, $a \geq b > 0$
+\Ensure $\gcd(a,b)$
+\While{$b \neq 0$}
+  \State $r \gets a \bmod b$
+  \State $a \gets b$
+  \State $b \gets r$
+\EndWhile
+\State \Return $a$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Algoritmo de Euclides Extendido}
+El algoritmo de Euclides extendido encuentra $x$ e $y$ tales que:
+\[
+ax + by = \gcd(a,b).
+\]
+
+\section{Inversos Modulares}
+El inverso modular de $a$ módulo $n$ es un número $a^{-1}$ tal que:
+\[
+a \cdot a^{-1} \equiv 1 \pmod{n}.
+\]
+El inverso modular existe si y solo si $\gcd(a,n) = 1$.
+
+\section{El Pequeño Teorema de Fermat}
+Si $p$ es primo y $a$ no es divisible por $p$, entonces:
+\[
+a^{p-1} \equiv 1 \pmod{p}.
+\]
+
+\section{Implementación en Haskell}
+
+\begin{lstlisting}[caption={Aritmética modular en Haskell}, label=lst:aritmetica-modular]
+-- Algoritmo de Euclides
+mcd :: Integral a => a -> a -> a
+mcd a 0 = abs a
+mcd a b = mcd b (a `mod` b)
+
+-- Algoritmo de Euclides extendido
+euclidesExtendido :: Integral a => a -> a -> (a, a, a)
+euclidesExtendido a 0 = (a, 1, 0)
+euclidesExtendido a b =
+    let (g, x1, y1) = euclidesExtendido b (a `mod` b)
+    in (g, y1, x1 - (a `div` b) * y1)
+
+-- Inverso modular
+inversoModular :: Integral a => a -> a -> Maybe a
+inversoModular a m =
+    let (g, x, _) = euclidesExtendido a m
+    in if g == 1 then Just (x `mod` m) else Nothing
+
+-- Potenciación modular
+potenciaMod :: Integer -> Integer -> Integer -> Integer
+potenciaMod base 0 _ = 1
+potenciaMod base exp mod
+    | even exp = (potenciaMod base (exp `div` 2) mod) ^ 2 `mod` mod
+    | otherwise = (base * potenciaMod base (exp - 1) mod) `mod` mod
+
+-- Verificar Pequeño Teorema de Fermat
+fermat :: Integer -> Integer -> Bool
+fermat a p = potenciaMod a (p-1) p == 1
+\end{lstlisting}
+
+\section{Ejercicios}
+\begin{enumerate}
+  \item Calcular el inverso modular de 3 módulo 11.
+  \item Demostrar el Pequeño Teorema de Fermat.
+  \item Implementar en Haskell una función que verifique si un número es primo usando el test de Fermat.
+\end{enumerate}

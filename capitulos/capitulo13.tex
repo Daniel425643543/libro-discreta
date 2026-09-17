@@ -1,0 +1,57 @@
+\chapter{Haskell para Combinatoria}
+
+\section{Generación de Permutaciones}
+
+\begin{lstlisting}[caption={Generación de permutaciones en Haskell}, label=lst:permutaciones]
+-- Generar todas las permutaciones de una lista
+permutaciones :: [a] -> [[a]]
+permutaciones [] = [[]]
+permutaciones xs = [ y:ys | y <- xs, ys <- permutaciones (eliminar y xs) ]
+  where
+    eliminar _ [] = []
+    eliminar y (x:xs') | y == x = xs'
+                       | otherwise = x : eliminar y xs'
+
+-- Generar combinaciones de k elementos
+combinaciones :: Int -> [a] -> [[a]]
+combinaciones 0 _ = [[]]
+combinaciones _ [] = []
+combinaciones k (x:xs) = map (x:) (combinaciones (k-1) xs) ++ combinaciones k xs
+
+-- Generar subconjuntos (potencia)
+subconjuntos :: [a] -> [[a]]
+subconjuntos [] = [[]]
+subconjuntos (x:xs) = subconjuntos xs ++ map (x:) (subconjuntos xs)
+\end{lstlisting}
+
+\section{Números Especiales}
+
+\begin{lstlisting}
+-- Números de Catalan
+catalan :: Integer -> Integer
+catalan n = product [n+2..2*n] `div` product [1..n]
+
+-- Números de Stirling de segunda especie
+stirling2 :: Integer -> Integer -> Integer
+stirling2 0 0 = 1
+stirling2 _ 0 = 0
+stirling2 0 _ = 0
+stirling2 n k = k * stirling2 (n-1) k + stirling2 (n-1) (k-1)
+\end{lstlisting}
+
+\section{Análisis de Algoritmos}
+
+\begin{lstlisting}[caption={Análisis de algoritmos en Haskell}, label=lst:analisis-alg]
+-- Contar iteraciones de un bucle anidado
+iteraciones :: Int -> Int
+iteraciones n = sum [i | i <- [1..n]]
+
+-- Medir tiempo de ejecución (aproximado)
+tiempo :: (a -> b) -> a -> IO ()
+tiempo f x = do
+    start <- getCurrentTime
+    let result = f x
+    end <- getCurrentTime
+    print result
+    print (diffUTCTime end start)
+\end{lstlisting}

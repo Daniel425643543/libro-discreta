@@ -1,0 +1,108 @@
+\chapter{Conexión y Recorridos}
+
+\section{Trayectorias y Caminos}
+Un camino en un grafo es una secuencia de vértices donde cada par consecutivo está conectado por una arista.
+
+\subsection{Tipos de caminos}
+\begin{itemize}
+  \item \textbf{Camino simple}: No repite vértices.
+  \item \textbf{Ciclo}: Camino que comienza y termina en el mismo vértice.
+  \item \textbf{Trayectoria}: Camino sin aristas repetidas.
+\end{itemize}
+
+\section{Grafos Conexos}
+Un grafo es conexo si existe un camino entre cualquier par de vértices.
+
+\subsection{Componentes conexas}
+Una componente conexa es un subgrafo maximal que es conexo.
+
+\section{Recorridos en Grafos}
+
+\subsection{Búsqueda en profundidad (DFS)}
+
+\begin{algorithm}[H]
+\caption{DFS (Búsqueda en Profundidad)}
+\label{alg:dfs}
+\begin{algorithmic}[1]
+\Require Un grafo $G=(V,E)$ y un vértice inicial $s$
+\Ensure Recorrido DFS
+\State visitado$[v] \gets \text{falso}$ para todo $v \in V$
+\Procedure{DFS}{$u$}
+  \State visitado$[u] \gets \text{verdadero}$
+  \For{cada $v \in \text{adyacentes}(u)$}
+    \If{$\neg$visitado$[v]$}
+      \State DFS$(v)$
+    \EndIf
+  \EndFor
+\EndProcedure
+\State DFS$(s)$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Búsqueda en anchura (BFS)}
+
+\begin{algorithm}[H]
+\caption{BFS (Búsqueda en Anchura)}
+\label{alg:bfs}
+\begin{algorithmic}[1]
+\Require Un grafo $G=(V,E)$ y un vértice inicial $s$
+\State visitado$[v] \gets \text{falso}$ para todo $v \in V$
+\State visitado$[s] \gets \text{verdadero}$
+\State cola $\gets [s]$
+\While{cola $\neq \emptyset$}
+  \State $u \gets \text{POPFRONT}(cola)$
+  \For{cada $v \in \text{adyacentes}(u)$}
+    \If{$\neg$visitado$[v]$}
+      \State visitado$[v] \gets \text{verdadero}$
+      \State cola $\gets$ cola $+$ $[v]$
+    \EndIf
+  \EndFor
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+\section{Caminos Eulerianos y Hamiltonianos}
+
+\subsection{Caminos Eulerianos}
+Un camino euleriano recorre todas las aristas exactamente una vez. Un grafo conexo tiene un ciclo euleriano si y solo si todos los vértices tienen grado par.
+
+\subsection{Caminos Hamiltonianos}
+Un camino hamiltoniano visita todos los vértices exactamente una vez. Teorema de Dirac: Si un grafo con $n \geq 3$ vértices tiene $\deg(v) \geq n/2$ para todo $v$, entonces tiene un ciclo hamiltoniano.
+
+\section{Implementación en Haskell}
+
+\begin{lstlisting}[caption={Algoritmos de recorrido en Haskell}, label=lst:grafos-haskell]
+-- DFS
+dfs :: Eq a => a -> [(a, [a])] -> [a]
+dfs inicio grafo = dfsAux inicio []
+  where
+    dfsAux v visitados
+      | v `elem` visitados = visitados
+      | otherwise = foldl (\acc w -> dfsAux w acc) (v:visitados) (adyacentes v grafo)
+
+-- BFS
+bfs :: Eq a => a -> [(a, [a])] -> [a]
+bfs inicio grafo = bfsAux [inicio] []
+  where
+    bfsAux [] visitados = visitados
+    bfsAux (v:cola) visitados
+      | v `elem` visitados = bfsAux cola visitados
+      | otherwise = bfsAux (cola ++ adyacentes v grafo) (visitados ++ [v])
+
+-- Verificar si es conexo
+esConexo :: Eq a => [(a, [a])] -> Bool
+esConexo grafo = all (`elem` reachable) (map fst grafo)
+  where (inicio:_) = map fst grafo
+        reachable = dfs inicio grafo
+
+-- Verificar si tiene ciclo euleriano
+cicloEuleriano :: Eq a => [(a, [a])] -> Bool
+cicloEuleriano grafo = esConexo grafo && all even (map (length . snd) grafo)
+\end{lstlisting}
+
+\section{Ejercicios}
+\begin{enumerate}
+  \item Ejecutar DFS y BFS en un grafo de ejemplo.
+  \item Demostrar que un grafo tiene un ciclo euleriano si todos los vértices tienen grado par.
+  \item Implementar en Haskell un algoritmo que encuentre un camino euleriano.
+\end{enumerate}
