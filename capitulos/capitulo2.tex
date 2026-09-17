@@ -1,123 +1,87 @@
 \chapter{Relaciones de Recurrencia}
 
-\section{Definiciones de Relaciones de Recurrencia}
+\section{Definiciones}
 
 \begin{definicion}
-Una \textbf{relación de recurrencia} para la sucesión $a_0, a_1, a_2, \ldots$ es una ecuación que relaciona $a_n$ con ciertos predecesores $a_0, a_1, a_2, \ldots, a_{n-1}$. Las \textbf{condiciones iniciales} son valores dados en forma explícita para un número finito de términos de la sucesión.
+Una \textbf{relación de recurrencia} para la sucesión $a_0, a_1, a_2, \ldots$ es una ecuación que relaciona $a_n$ con predecesores. Las \textbf{condiciones iniciales} son valores dados explícitamente para un número finito de términos.
 \end{definicion}
 
-\begin{ejemplo}
-La sucesión de Fibonacci se define por la relación de recurrencia:
+\begin{ejemplo}[Fibonacci]
 \[
-f_n = f_{n-1} + f_{n-2}, \quad n \geq 3,
+f_n = f_{n-1} + f_{n-2}, \quad n \geq 3, \quad f_1 = f_2 = 1.
 \]
-con condiciones iniciales $f_1 = 1$, $f_2 = 1$.
 \end{ejemplo}
 
 \begin{ejemplo}[Torres de Hanoi]
-Sea $h_n$ el número de movimientos necesarios para trasladar $n$ discos. Se cumple:
 \[
 h_n = 2h_{n-1} + 1, \quad h_1 = 1.
 \]
 \end{ejemplo}
 
-\begin{ejemplo}
-Sea $S_n$ el número de cadenas de $n$ bits que no contienen el patrón 000. Encuentre una relación de recurrencia y condiciones iniciales para $\{S_n\}$.
-\end{ejemplo}
-
-\section{Solución de Relaciones de Recurrencia}
+\section{Solución de Recurrencias}
 
 \begin{definicion}
-Resolver una relación de recurrencia significa encontrar una fórmula explícita para el término general $a_n$.
+Resolver una relación de recurrencia significa hallar una fórmula explícita para $a_n$.
 \end{definicion}
 
 \begin{ejemplo}
-Resolver $a_n = a_{n-1} + 3$, con $a_1 = 2$.
-\[
-a_n = a_1 + 3(n-1) = 2 + 3(n-1).
-\]
+$a_n = a_{n-1} + 3$, $a_1 = 2$ $\Rightarrow$ $a_n = 2 + 3(n-1)$.
 \end{ejemplo}
 
 \begin{ejemplo}
-Resolver $h_n = 2h_{n-1} + 1$, $h_1 = 1$.
-\[
-h_n = 2^n - 1.
-\]
+$h_n = 2h_{n-1} + 1$, $h_1 = 1$ $\Rightarrow$ $h_n = 2^n - 1$.
 \end{ejemplo}
 
 \begin{ejemplo}
-Resolver $a_n = 3n\, a_{n-1}$, $a_0 = 2$.
-\[
-a_n = 2 \cdot 3^n n!.
-\]
+$a_n = 3n\,a_{n-1}$, $a_0 = 2$ $\Rightarrow$ $a_n = 2 \cdot 3^n n!$.
 \end{ejemplo}
 
-\section{Solución de Relaciones de Recurrencia Homogéneas Lineales}
+\section{Recurrencias Homogéneas Lineales}
 
 \begin{definicion}
-Una relación de recurrencia homogénea lineal de orden $k$ con coeficientes constantes es de la forma:
+Una recurrencia homogénea lineal de orden $k$ con coeficientes constantes es de la forma
 \[
-a_n = c_1 a_{n-1} + c_2 a_{n-2} + \cdots + c_k a_{n-k}, \quad c_k \neq 0,
+a_n = c_1 a_{n-1} + \cdots + c_k a_{n-k}, \quad c_k \neq 0.
 \]
-junto con $k$ condiciones iniciales que definen una única sucesión.
 \end{definicion}
 
 \begin{teorema}
-Dada la relación de recurrencia homogénea lineal de orden 2 con coeficientes constantes:
-\[
-a_n = c_1 a_{n-1} + c_2 a_{n-2} \tag{2.1}
-\]
-con condiciones iniciales $a_0 = \alpha_0$, $a_1 = \alpha_1$, se verifica:
+Para la recurrencia de orden 2, $a_n = c_1 a_{n-1} + c_2 a_{n-2}$:
 \begin{enumerate}
-  \item Si $U_n$ y $V_n$ son soluciones de (2.1), entonces $W_n = b U_n + d V_n$ también es solución.
-  \item Si $r$ es raíz de la ecuación característica $t^2 - c_1 t - c_2 = 0$, entonces $r^n$ es solución de (2.1).
-  \item Si $r_1$ y $r_2$ son raíces reales distintas, la solución general es $a_n = b r_1^n + d r_2^n$.
-  \item Si $r$ es raíz doble, la solución es $a_n = b r^n + d n r^n$.
-  \item Si las raíces son complejas conjugadas, la solución se expresa en forma trigonométrica.
+  \item Si $U_n, V_n$ son soluciones, $bU_n + dV_n$ también lo es.
+  \item Si $r$ es raíz de $t^2 - c_1 t - c_2 = 0$, entonces $r^n$ es solución.
+  \item Si $r_1 \neq r_2$ reales: $a_n = b r_1^n + d r_2^n$.
+  \item Si $r$ es raíz doble: $a_n = b r^n + d n r^n$.
+  \item Si las raíces son complejas: solución trigonométrica.
 \end{enumerate}
 \end{teorema}
 
-\begin{ejemplo}
-Resolver la relación de recurrencia de Fibonacci:
-\[
-f_n = f_{n-1} + f_{n-2}, \quad f_0 = 0, \ f_1 = 1.
-\]
-La ecuación característica es $r^2 - r - 1 = 0$, cuyas raíces son $\frac{1 \pm \sqrt{5}}{2}$. Por tanto,
+\begin{ejemplo}[Fibonacci]
+$f_n = f_{n-1} + f_{n-2}$, $f_0 = 0$, $f_1 = 1$. La ecuación característica es $r^2 - r - 1 = 0$, cuyas raíces son $\frac{1 \pm \sqrt{5}}{2}$. Por tanto,
 \[
 f_n = \frac{1}{\sqrt{5}}\left(\frac{1+\sqrt{5}}{2}\right)^n - \frac{1}{\sqrt{5}}\left(\frac{1-\sqrt{5}}{2}\right)^n.
 \]
 \end{ejemplo}
 
 \begin{ejemplo}
-Resolver $a_n = 6a_{n-1} - 9a_{n-2}$, con $a_0 = 1$, $a_1 = -1$.
+$a_n = 6a_{n-1} - 9a_{n-2}$, $a_0 = 1$, $a_1 = -1$. La ecuación característica da $r = 3$ doble. Así $a_n = (b + dn)3^n$. Con las condiciones iniciales, $b = 1$, $d = -4/3$. Por tanto,
 \[
-r^2 - 6r + 9 = (r-3)^2 = 0 \Rightarrow r=3 \text{ doble}.
+a_n = \left(1 - \tfrac{4}{3}n\right)3^n.
 \]
-Así, $a_n = (b + dn)3^n$. Usando condiciones iniciales:
-\[
-a_0 = b = 1, \quad a_1 = (1+d)3 = -1 \Rightarrow d = -\frac{4}{3}.
-\]
-Por tanto, $a_n = \left(1 - \frac{4}{3}n\right)3^n$.
 \end{ejemplo}
 
-\section{Solución de Relaciones de Recurrencia No Homogéneas Lineales}
+\section{Recurrencias No Homogéneas}
 
 \begin{teorema}
-Dada la relación no homogénea lineal de orden 2:
-\[
-a_n = c_1 a_{n-1} + c_2 a_{n-2} + f(n), \tag{2.3}
-\]
-si $g(n)$ es una solución particular de (2.3) y $V_n$ es la solución de la homogénea asociada, entonces $U_n = V_n + g(n)$ es la solución general.
+Dada $a_n = c_1 a_{n-1} + c_2 a_{n-2} + f(n)$, si $g(n)$ es solución particular y $V_n$ es solución de la homogénea asociada, entonces $U_n = V_n + g(n)$ es solución general.
 \end{teorema}
 
 \begin{ejemplo}
-Resolver $a_n = 6a_{n-1} - 8a_{n-2} + 3$, con $a_0 = 0$, $a_1 = 1$.
-La homogénea: $r^2 - 6r + 8 = 0 \Rightarrow r=2,4$.
-Solución particular constante: $g(n) = A$. Sustituyendo: $A = 6A - 8A + 3 \Rightarrow 3A = -3 \Rightarrow A = -1$.
-Entonces $a_n = b 2^n + d 4^n - 1$. Usando condiciones iniciales se obtiene $b=0$, $d=1/2$, luego $a_n = \frac{1}{2}4^n - 1$.
-\end{ejemplo}
-
-\begin{ejemplo}
-Resolver $a_n = 7a_{n-1} - 10a_{n-2} + 16n$, con $a_0 = 0$, $a_1 = 1$.
-(Se deja como ejercicio.)
+$a_n = 6a_{n-1} - 8a_{n-2} + 3$, $a_0 = 0$, $a_1 = 1$.
+Homogénea: $r^2 - 6r + 8 = 0 \Rightarrow r = 2, 4$.
+Solución particular constante: $A = 6A - 8A + 3 \Rightarrow A = -1$.
+Con las condiciones iniciales, $b = 0$, $d = 1/2$. Luego,
+\[
+a_n = \tfrac{1}{2}\,4^n - 1.
+\]
 \end{ejemplo}

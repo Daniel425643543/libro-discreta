@@ -1,4 +1,4 @@
-\documentclass[12pt]{book}
+\documentclass[12pt,openany]{book}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish,es-noshorthands]{babel}
@@ -17,22 +17,21 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{pgfplots}
-\usepackage[most]{tcolorbox}
 \usepackage{tikz}
-\usepackage{float}   % <-- añadido para la opción [H] en algoritmos
+\usepackage{float}
 
-\usetikzlibrary{babel} % compatibilidad con Babel
+\usetikzlibrary{babel, arrows.meta, positioning}
 \pgfplotsset{compat=1.18}
 
-% Configuración de listings para Haskell
+% Listings para Haskell
 \lstset{
   language=Haskell,
   basicstyle=\small\ttfamily,
   keywordstyle=\color{blue},
-  commentstyle=\color{green!60!black},
-  stringstyle=\color{red},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red!70!black},
   numbers=left,
-  numberstyle=\tiny,
+  numberstyle=\tiny\color{gray},
   stepnumber=1,
   breaklines=true,
   frame=single,
@@ -41,18 +40,39 @@
   showstringspaces=false
 }
 
-% Configuración de algoritmos
+% Listings para Python
+\lstdefinestyle{python}{
+  language=Python,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\color{blue}\bfseries,
+  commentstyle=\color{green!50!black}\itshape,
+  stringstyle=\color{red!70!black},
+  numberstyle=\tiny\color{gray},
+  numbers=left,
+  stepnumber=1,
+  backgroundcolor=\color{gray!5},
+  frame=single,
+  breaklines=true,
+  tabsize=4
+}
+
+% Algoritmos en español
 \algrenewcommand\algorithmicrequire{\textbf{Entrada:}}
 \algrenewcommand\algorithmicensure{\textbf{Salida:}}
 \floatname{algorithm}{Algoritmo}
 
 % Teoremas
-\newtheorem{teorema}{Teorema}[chapter]
+\theoremstyle{definition}
 \newtheorem{definicion}{Definición}[chapter]
-\newtheorem{ejemplo}{Ejemplo}[chapter]
-\newtheorem{corolario}{Corolario}[chapter]
-\newtheorem{observacion}{Observación}[chapter]
-\newtheorem{ejercicio}{Ejercicio}[chapter]
+\newtheorem{ejemplo}[definicion]{Ejemplo}
+\newtheorem{observacion}[definicion]{Observación}
+\newtheorem{ejercicio}[definicion]{Ejercicio}
+
+\theoremstyle{plain}
+\newtheorem{teorema}[definicion]{Teorema}
+\newtheorem{corolario}[definicion]{Corolario}
+\newtheorem{lema}[definicion]{Lema}
+\newtheorem{proposicion}[definicion]{Proposición}
 
 % Comandos útiles
 \newcommand{\N}{\mathbb{N}}
@@ -60,14 +80,21 @@
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\C}{\mathbb{C}}
+\newcommand{\Pbb}{\mathcal{P}}
+
+\title{Estructuras Discretas II}
+\author{Dr(c) Wilber Ramos Lovón}
+\date{2026}
 
 \begin{document}
 
 \frontmatter
+\maketitle
 \include{prefacio}
 \tableofcontents
 
 \mainmatter
+
 \part{Técnicas Avanzadas de Conteo}
 \include{capitulos/capitulo1}
 \include{capitulos/capitulo2}
@@ -76,4 +103,24 @@
 
 \part{Teoría de Grafos}
 \include{capitulos/capitulo5}
+\include{capitulos/capitulo6}
+\include{capitulos/capitulo7}
+\include{capitulos/capitulo8}
+
+\part{Criptografía}
+\include{capitulos/capitulo9}
+\include{capitulos/capitulo10}
+\include{capitulos/capitulo11}
+
+\part{Programación Funcional con Haskell}
+\include{capitulos/capitulo12}
+\include{capitulos/capitulo13}
+\include{capitulos/capitulo14}
+\include{capitulos/capitulo15}
+
+\part{Guías de Práctica}
+\include{capitulos/capitulo16}
+\include{capitulos/capitulo17}
+\include{capitulos/capitulo18}
+
 \end{document}

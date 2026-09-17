@@ -1,43 +1,32 @@
 \chapter{Criptografía Clásica}
 
 \section{Introducción}
-La criptografía es la ciencia de la comunicación segura. Se divide en:
 \begin{itemize}
-  \item Criptografía simétrica: misma clave para cifrar y descifrar.
-  \item Criptografía asimétrica: claves diferentes para cifrar y descifrar.
+  \item \textbf{Criptografía simétrica}: misma clave para cifrar y descifrar.
+  \item \textbf{Criptografía asimétrica}: claves diferentes.
 \end{itemize}
 
 \section{Cifrado César}
-El Cifrado César desplaza cada letra del mensaje un número fijo de posiciones en el alfabeto.
-
-Con un desplazamiento de 3:
+Desplaza cada letra un número fijo de posiciones. Con desplazamiento 3:
 \[
-\text{HOLA} \rightarrow \text{KROD}.
+\text{HOLA} \to \text{KROD}.
 \]
-
-\subsection{Fuerza bruta}
-El cifrado César tiene solo 25 posibles desplazamientos, lo que lo hace vulnerable a ataques de fuerza bruta.
+Solo tiene 25 desplazamientos: es vulnerable a fuerza bruta.
 
 \section{Cifrado de Sustitución}
-El cifrado de sustitución reemplaza cada letra por otra según una tabla de sustitución.
-
-\subsection{Análisis de frecuencia}
-El análisis de frecuencia es un método para romper cifrados de sustitución basado en la frecuencia de aparición de letras en el idioma.
+Reemplaza cada letra por otra según una tabla. El \textbf{análisis de frecuencia} permite romperlo.
 
 \section{Cifrado de Vigenère}
-El cifrado de Vigenère usa una palabra clave para desplazar cada letra de forma diferente.
-
-Con clave \texttt{CLAVE}:
+Usa una palabra clave para desplazar cada letra de forma diferente. Con clave \texttt{CLAVE}:
 \[
-\text{HOLA} \rightarrow \text{JPRD}.
+\text{HOLA} \to \text{JPRD}.
 \]
 
 \section{Implementación en Haskell}
 
-\begin{lstlisting}[caption={Criptografía clásica en Haskell}, label=lst:cripto-clasica]
+\begin{lstlisting}[caption={Criptografía clásica en Haskell}]
 import Data.Char
 
--- Cifrado César
 cesar :: Int -> String -> String
 cesar n = map (cifrar n)
   where
@@ -45,34 +34,19 @@ cesar n = map (cifrar n)
       | isAlpha c = chr (ord 'A' + ((ord (toUpper c) - ord 'A' + n) `mod` 26))
       | otherwise = c
 
--- Descifrado César (fuerza bruta)
 cesarFuerzaBruta :: String -> [String]
 cesarFuerzaBruta texto = [cesar n texto | n <- [0..25]]
 
--- Cifrado de Vigenère
 vigenere :: String -> String -> String
 vigenere clave texto =
     zipWith cifrar (map toUpper texto) (cycle (map toUpper clave))
   where
     cifrar c k = chr (ord 'A' + ((ord c - ord 'A' + ord k - ord 'A') `mod` 26))
-
--- Descifrado de Vigenère
-vigenereDescifrar :: String -> String -> String
-vigenereDescifrar clave texto =
-    zipWith descifrar (map toUpper texto) (cycle (map toUpper clave))
-  where
-    descifrar c k = chr (ord 'A' + ((ord c - ord 'A' - (ord k - ord 'A')) `mod` 26))
-
--- Análisis de frecuencia
-frecuencia :: String -> [(Char, Int)]
-frecuencia texto =
-    let letras = filter isAlpha $ map toUpper texto
-    in [(c, length $ filter (==c) letras) | c <- ['A'..'Z']]
 \end{lstlisting}
 
 \section{Ejercicios}
 \begin{enumerate}
-  \item Cifrar y descifrar un mensaje con el cifrado César.
-  \item Romper un cifrado César usando fuerza bruta.
-  \item Implementar el cifrado de Vigenère en Haskell.
+  \item Cifrar y descifrar con César.
+  \item Romper un cifrado César por fuerza bruta.
+  \item Implementar Vigenère en Haskell.
 \end{enumerate}

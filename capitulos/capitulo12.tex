@@ -1,95 +1,48 @@
 \chapter{Introducción a Haskell}
 
 \section{¿Qué es Haskell?}
-Haskell es un lenguaje de programación funcional puro, de propósito general. Fue diseñado en la década de 1990 como un lenguaje de investigación, pero hoy se utiliza en la industria en áreas como verificación de microprocesadores, telecomunicaciones, comercio electrónico, etc.
+Haskell es un lenguaje funcional puro, de propósito general. Se utiliza en verificación de hardware, telecomunicaciones, comercio electrónico, etc.
 
 \subsection{Características principales}
 \begin{itemize}
-  \item \textbf{Transparencia referencial}: El resultado de una función depende únicamente de sus argumentos.
-  \item \textbf{Funciones como ciudadanos de primera clase}: Pueden ser pasadas como argumentos, devueltas como resultados y almacenadas.
-  \item \textbf{Evaluación perezosa}: Las expresiones no se evalúan hasta que son necesarias.
-  \item \textbf{Sistema de tipos fuerte y estático}: Los tipos se verifican en tiempo de compilación.
-  \item \textbf{Inferencia de tipos}: El compilador deduce los tipos.
+  \item \textbf{Transparencia referencial}: el resultado depende solo de los argumentos.
+  \item \textbf{Funciones como ciudadanos de primera clase}: se pasan, devuelven y almacenan.
+  \item \textbf{Evaluación perezosa}: se evalúa solo cuando se necesita.
+  \item \textbf{Tipos fuerte y estático}: verificación en compilación.
+  \item \textbf{Inferencia de tipos}.
   \item \textbf{Polimorfismo paramétrico y sobrecarga}.
 \end{itemize}
 
-\section{Software y Datos}
-\begin{definicion}
-Un \textbf{valor} es una pieza de datos (ej. 2, 3.14159, "John").
-\end{definicion}
-\begin{definicion}
-Una \textbf{expresión} combina valores usando funciones y operadores (ej. $2+2$, $2\cdot\pi\cdot r$).
-\end{definicion}
-\begin{definicion}
-Una \textbf{función} es una forma de calcular un resultado a partir de los argumentos.
-\end{definicion}
+\section{Tipos Básicos}
 
-\section{Tipos Básicos en Haskell}
-
-\subsection{Números Enteros: Int y Integer}
+\subsection{Enteros}
 \begin{table}[h]
 \centering
-\caption{Comparación entre Int y Integer}
-\begin{tabular}{|p{4cm}|p{4cm}|p{4cm}|}
+\begin{tabular}{|l|p{5cm}|p{5cm}|}
 \hline
-Característica & Int & Integer \\
+\textbf{Característica} & \textbf{Int} & \textbf{Integer} \\
 \hline
-Tamaño & Fijo (depende de arquitectura) & Arbitrario (crece según necesidad) \\
-Rango & Limitado (ej. $-2^{63}$ a $2^{63}-1$) & Ilimitado \\
-Rendimiento & Más rápido & Más lento \\
-Riesgo & Desbordamiento & Sin desbordamiento \\
-Uso recomendado & Cuando el rango es suficiente y se necesita velocidad & Cuando se requiere precisión y rango ilimitado \\
+Tamaño & Fijo & Arbitrario \\
+Rango & Limitado & Ilimitado \\
+Rendimiento & Rápido & Lento \\
+Riesgo & Desbordamiento & Ninguno \\
 \hline
 \end{tabular}
+\caption{Comparación entre Int e Integer}
 \end{table}
 
-\subsection{Números Reales: Float y Double}
-\begin{itemize}
-  \item Float: precisión simple (aprox. 7 dígitos).
-  \item Double: precisión doble (aprox. 15-16 dígitos).
-\end{itemize}
+\subsection{Reales}
+\texttt{Float} (7 dígitos), \texttt{Double} (15-16 dígitos).
 
-\subsection{Valores Lógicos: Bool}
-Operadores: \&\&, ||, not.
+\subsection{Bool, Char, String}
+\texttt{Bool}: \texttt{True}, \texttt{False}. \texttt{Char}: \texttt{'a'}. \texttt{String} es \texttt{[Char]}.
 
-\subsection{Caracteres: Char}
-Se escriben entre comillas simples: \texttt{'a'}.
+\section{Definición de funciones}
 
-\subsection{Cadenas: String}
-\texttt{String} es sinónimo de \texttt{[Char]}.
-
-\subsection{Tabla Resumen de Tipos Básicos}
-\begin{table}[h]
-\centering
-\caption{Resumen de tipos básicos en Haskell}
-\begin{tabular}{|c|c|c|c|}
-\hline
-Tipo & Ejemplo & Descripción & Observaciones \\
-\hline
-Int & 42 & Entero de tamaño fijo & Rápido pero con límites \\
-Integer & 123456789012345 & Entero de precisión arbitraria & Lento pero sin límites \\
-Float & 3.14 & Real de precisión simple & 7 dígitos aprox. \\
-Double & 3.14159265359 & Real de precisión doble & 15-16 dígitos aprox. \\
-Bool & True, False & Valor lógico & Operadores: \&\&, ||, not \\
-Char & 'a' & Carácter Unicode & Comillas simples \\
-String & "hola" & Cadena de texto & Es [Char] \\
-\hline
-\end{tabular}
-\end{table}
-
-\subsection{Ejercicios}
-(Se incluyen los ejercicios de la sección 12.3.7.)
-
-\section{Definición de Funciones}
-
-\subsection{Sintaxis básica}
 \begin{lstlisting}
 areaRectangulo :: Int -> Int -> Int
 areaRectangulo b h = b * h
-\end{lstlisting}
 
-\subsection{Definición por casos (Pattern Matching)}
-\begin{lstlisting}
 maximo :: Int -> Int -> Int
 maximo x y | x <= y = y
            | otherwise = x
@@ -99,155 +52,37 @@ factorial 0 = 1
 factorial n = n * factorial (n - 1)
 \end{lstlisting}
 
-\subsection{Evaluación Perezosa}
-Haskell solo evalúa lo necesario, permitiendo expresiones como \texttt{fst (5, 5 `div` 0)}.
-
-\subsection{Definiciones locales: where y let}
-\begin{lstlisting}
-raices :: Float -> Float -> Float -> (Float, Float)
-raices a b c
-    | disc >= 0 = ((-b + sqrt disc) / deno, (-b - sqrt disc) / deno)
-    | otherwise = error "Raices complejas"
-  where
-    disc = b^2 - 4*a*c
-    deno = 2*a
-
-areaTriangulo :: Float -> Float -> Float -> Float
-areaTriangulo a b c =
-    let s = (a + b + c) / 2
-    in sqrt (s * (s - a) * (s - b) * (s - c))
-\end{lstlisting}
-
-\subsection{Expresiones Lambda (Funciones Anónimas)}
-\begin{lstlisting}
-(\x -> x + 1) 5   -- 6
-(\x y -> x + y) 3 4 -- 7
-\end{lstlisting}
-
-\section{Operadores}
-Los operadores son funciones con dos argumentos cuyo nombre es simbólico. Se pueden definir con \texttt{infix}, \texttt{infixl}, \texttt{infixr}.
-
-\section{Tipos Polimórficos}
-Una función es polimórfica cuando puede operar sobre valores de diferentes tipos.
-\begin{lstlisting}
-length :: [a] -> Int
-length [] = 0
-length (_:xs) = 1 + length xs
-\end{lstlisting}
-
-\section{El Sistema de Clases de Haskell}
-
-\subsection{Clase Eq}
-\begin{lstlisting}
-class Eq a where
-  (==) :: a -> a -> Bool
-  (/=) :: a -> a -> Bool
-  x == y = not (x /= y)
-  x /= y = not (x == y)
-\end{lstlisting}
-
-\subsection{Jerarquía de Clases y Herencia}
-\begin{lstlisting}
-class (Eq a) => Ord a where
-  (<), (<=), (>=), (>) :: a -> a -> Bool
-  max, min :: a -> a -> a
-\end{lstlisting}
-
-Herencia múltiple: \texttt{class (Eq a, Show a) => Num a where ...}
-
-\section{Funciones de Orden Superior}
-
-\subsection{Funciones como argumentos}
-\begin{lstlisting}
-dosVeces :: (a -> a) -> a -> a
-dosVeces f x = f (f x)
-\end{lstlisting}
-
-\subsection{Funciones como resultados (Currificación)}
-\begin{lstlisting}
-suma :: Int -> Int -> Int
-suma x y = x + y
-suma5 :: Int -> Int
-suma5 = suma 5
-\end{lstlisting}
-
-\subsection{Secciones de operadores}
-\begin{lstlisting}
-(+3) 5 -- 8
-(2^) 3 -- 8
-\end{lstlisting}
-
 \section{Listas}
 
 \begin{lstlisting}
 [1,2,3] :: [Int]
-[True, False] :: [Bool]
 [1..10] -- [1,2,3,4,5,6,7,8,9,10]
 [1,3..10] -- [1,3,5,7,9]
-\end{lstlisting}
 
-\subsection{Comprensión de listas}
-\begin{lstlisting}
 dobles :: [Int] -> [Int]
 dobles xs = [2*x | x <- xs]
 
-factores :: Int -> [Int]
-factores n = [i | i <- [2..n], n `mod` i == 0]
-\end{lstlisting}
-
-\subsection{La función map}
-\begin{lstlisting}
 map :: (a -> b) -> [a] -> [b]
 map (+1) [1,2,3] -- [2,3,4]
 \end{lstlisting}
 
-\subsection{La función flip}
-\begin{lstlisting}
-flip :: (a -> b -> c) -> b -> a -> c
-flip f x y = f y x
-\end{lstlisting}
+\section{Funciones de Orden Superior}
 
-\subsection{Composición de funciones}
 \begin{lstlisting}
+dosVeces :: (a -> a) -> a -> a
+dosVeces f x = f (f x)
+
 (.) :: (b -> c) -> (a -> b) -> (a -> c)
 (g . f) x = g (f x)
 \end{lstlisting}
 
 \section{Tuplas}
+
 \begin{lstlisting}
 (1, "hola") :: (Int, String)
 fst (1, "hola") -- 1
 snd (1, "hola") -- "hola"
 \end{lstlisting}
 
-\subsection{Funciones estándar sobre listas}
-\begin{table}[h]
-\centering
-\caption{Funciones estándar sobre listas}
-\begin{tabular}{|c|l|}
-\hline
-Función & Descripción \\
-\hline
-head xs & Primer elemento \\
-tail xs & Todos menos el primero \\
-init xs & Todos menos el último \\
-last xs & Último elemento \\
-length xs & Número de elementos \\
-null xs & True si la lista está vacía \\
-take n xs & Los primeros $n$ elementos \\
-drop n xs & Todos excepto los primeros $n$ \\
-zip xs ys & Combina dos listas en pares \\
-map f xs & Aplica $f$ a cada elemento \\
-filter p xs & Selecciona los elementos que cumplen $p$ \\
-sum xs & Suma de los elementos \\
-product xs & Producto de los elementos \\
-(++) & Concatenación \\
-\hline
-\end{tabular}
-\end{table}
-
-\section{Ejemplos Integradores}
-(Se incluyen los 10 ejemplos integradores del PDF: procesamiento de estudiantes, estadísticas, validación con Maybe, manipulación de cadenas, matrices, secuencias, expresiones matemáticas, archivos, juego de adivinanza, sistema de biblioteca.)
-
 \section{Ejercicios}
-(Se incluyen los ejercicios de la sección 12.12.)
+(Ver el texto completo.)

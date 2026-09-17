@@ -1,82 +1,44 @@
 \chapter{Haskell para Criptografía}
 
-\section{Aritmética Modular en Haskell}
+\section{Aritmética Modular}
 
-\begin{lstlisting}[caption={Aritmética modular en Haskell}, label=lst:mod-haskell]
--- Algoritmo de Euclides extendido
+\begin{lstlisting}[caption={Aritmética modular en Haskell}]
 euclidesExt :: Integer -> Integer -> (Integer, Integer, Integer)
 euclidesExt a 0 = (a, 1, 0)
 euclidesExt a b =
     let (g, x1, y1) = euclidesExt b (a `mod` b)
     in (g, y1, x1 - (a `div` b) * y1)
 
--- Inverso modular
 inversoMod :: Integer -> Integer -> Maybe Integer
 inversoMod a m =
     let (g, x, _) = euclidesExt a m
     in if g == 1 then Just (x `mod` m) else Nothing
 
--- Potenciación modular (exponenciación binaria)
 potenciaMod :: Integer -> Integer -> Integer -> Integer
 potenciaMod base 0 _ = 1
 potenciaMod base exp mod
-    | even exp = let p = potenciaMod base (exp `div` 2) mod in (p * p) `mod` mod
+    | even exp = let p = potenciaMod base (exp `div` 2) mod
+                 in (p*p) `mod` mod
     | otherwise = (base * potenciaMod base (exp - 1) mod) `mod` mod
-\end{lstlisting}
-
-\section{Criptografía Clásica}
-
-\begin{lstlisting}[caption={Cifrados clásicos en Haskell}, label=lst:cripto-clasica2]
-import Data.Char
-
--- Cifrado César
-cesar :: Int -> String -> String
-cesar n = map (cifrar n)
-  where
-    cifrar n c
-      | isAlpha c = chr (ord 'A' + ((ord (toUpper c) - ord 'A' + n) `mod` 26))
-      | otherwise = c
-
--- Cifrado de Vigenère
-vigenere :: String -> String -> String
-vigenere clave texto =
-    zipWith cifrar (map toUpper texto) (cycle (map toUpper clave))
-  where
-    cifrar c k = chr (ord 'A' + ((ord c - ord 'A' + ord k - ord 'A') `mod` 26))
-
--- Análisis de frecuencia
-frecuencia :: String -> [(Char, Int)]
-frecuencia texto =
-    let letras = filter isAlpha $ map toUpper texto
-    in [(c, length $ filter (==c) letras) | c <- ['A'..'Z']]
 \end{lstlisting}
 
 \section{RSA Completo}
 
-\begin{lstlisting}[caption={RSA completo en Haskell}, label=lst:rsa-completo]
--- Generar clave RSA
-generarRSA :: Integer -> Integer -> Integer -> ((Integer, Integer), (Integer, Integer))
+\begin{lstlisting}[caption={RSA en Haskell}]
+generarRSA :: Integer -> Integer -> Integer -> ((Integer,Integer),(Integer,Integer))
 generarRSA p q e =
-    let n = p * q
-        phi = (p-1) * (q-1)
+    let n = p*q
+        phi = (p-1)*(q-1)
         d = case inversoMod e phi of
               Just d' -> d'
-              Nothing -> error "e no es invertible"
-    in ((e, n), (d, n))
+              Nothing -> error "no invertible"
+    in ((e,n),(d,n))
 
--- Conversión texto-número
 textoANumero :: String -> Integer
 textoANumero = foldl (\acc c -> acc * 256 + fromIntegral (ord c)) 0
 
 numeroATexto :: Integer -> String
 numeroATexto 0 = ""
-numeroATexto n = let (q, r) = n `divMod` 256 in numeroATexto q ++ [chr (fromIntegral r)]
-
--- Cifrar texto
-cifrarTextoRSA :: String -> (Integer, Integer) -> Integer
-cifrarTextoRSA texto clave = potenciaMod (textoANumero texto) (fst clave) (snd clave)
-
--- Descifrar texto
-descifrarTextoRSA :: Integer -> (Integer, Integer) -> String
-descifrarTextoRSA cifrado clave = numeroATexto (potenciaMod cifrado (fst clave) (snd clave))
+numeroATexto n = let (q,r) = n `divMod` 256
+                 in numeroATexto q ++ [chr (fromIntegral r)]
 \end{lstlisting}

@@ -1,9 +1,7 @@
 \chapter{Árboles}
 
 \section{Definiciones Básicas}
-Un \textbf{árbol} es un grafo conexo sin ciclos.
-
-Las siguientes afirmaciones son equivalentes para un grafo $G$ con $n$ vértices:
+Un \textbf{árbol} es un grafo conexo sin ciclos. Para un grafo $G$ con $n$ vértices son equivalentes:
 \begin{enumerate}
   \item $G$ es un árbol.
   \item $G$ es conexo y tiene $n-1$ aristas.
@@ -11,80 +9,61 @@ Las siguientes afirmaciones son equivalentes para un grafo $G$ con $n$ vértices
   \item Entre cualquier par de vértices existe exactamente un camino.
 \end{enumerate}
 
-\section{Clasificación de Árboles}
+\section{Clasificación}
 
 \subsection{Árboles binarios}
-Un árbol binario es un árbol enraizado donde cada nodo tiene a lo sumo dos hijos.
-
-\subsection{Propiedades de los árboles binarios}
+Un árbol binario es un árbol enraizado donde cada nodo tiene a lo sumo dos hijos. Propiedades:
 \begin{itemize}
   \item Un árbol binario con $n$ nodos tiene $n-1$ aristas.
-  \item La altura de un árbol binario con $n$ nodos es al menos $\lceil \log_2(n+1) \rceil$.
-  \item El número de nodos en el nivel $i$ es a lo sumo $2^i$.
+  \item La altura es al menos $\lceil \log_2(n+1) \rceil$.
+  \item El nivel $i$ tiene a lo sumo $2^i$ nodos.
 \end{itemize}
 
 \section{Árboles Ponderados}
 
 \subsection{Árboles generadores}
-Un \textbf{árbol generador} de un grafo $G$ es un subgrafo que es un árbol y contiene todos los vértices de $G$.
+Un \textbf{árbol generador} de $G$ es un subgrafo que es árbol y contiene todos los vértices.
 
 \subsection{Códigos de Huffman}
-El algoritmo de Huffman construye un árbol binario óptimo para codificar caracteres basados en su frecuencia.
 
-\begin{algorithm}[H]
+\begin{algorithm}[htbp]
 \caption{Algoritmo de Huffman}
-\label{alg:huffman}
 \begin{algorithmic}[1]
-\Require Un conjunto de símbolos con frecuencias
-\Ensure Un árbol de codificación binario
-\State Crear un nodo hoja para cada símbolo con su frecuencia
-\State Insertar todos los nodos en una cola de prioridad
-\While{la cola tiene más de un elemento}
-  \State Extraer los dos nodos con menor frecuencia
-  \State Crear un nuevo nodo con frecuencia igual a la suma
-  \State Los nodos extraídos son los hijos del nuevo nodo
-  \State Insertar el nuevo nodo en la cola
+\Require Símbolos con frecuencias
+\Ensure Árbol de codificación binario
+\State Crear nodo hoja por símbolo con su frecuencia
+\State Insertar todos los nodos en cola de prioridad
+\While{cola tiene más de un elemento}
+  \State Extraer los dos nodos de menor frecuencia
+  \State Crear nuevo nodo con frecuencia suma
+  \State Los nodos extraídos son hijos del nuevo
+  \State Insertar el nuevo en la cola
 \EndWhile
-\State \Return la raíz del árbol
+\State \Return raíz del árbol
 \end{algorithmic}
 \end{algorithm}
 
 \section{Implementación en Haskell}
 
-\begin{lstlisting}[caption={Árboles binarios en Haskell}, label=lst:arboles-haskell]
--- Definición de árbol binario
-data ArbolBinario a = Vacio | Nodo a (ArbolBinario a) (ArbolBinario a) deriving (Show, Eq)
+\begin{lstlisting}[caption={Árboles binarios en Haskell}]
+data ArbolBinario a = Vacio | Nodo a (ArbolBinario a) (ArbolBinario a)
+  deriving (Show, Eq)
 
--- Ejemplo de árbol
-arbolEjemplo :: ArbolBinario Int
-arbolEjemplo = Nodo 1 (Nodo 2 Vacio Vacio) (Nodo 3 Vacio Vacio)
-
--- Recorrido en preorden
 preorden :: ArbolBinario a -> [a]
 preorden Vacio = []
 preorden (Nodo x izq der) = x : preorden izq ++ preorden der
 
--- Recorrido en inorden
 inorden :: ArbolBinario a -> [a]
 inorden Vacio = []
 inorden (Nodo x izq der) = inorden izq ++ [x] ++ inorden der
 
--- Recorrido en postorden
 postorden :: ArbolBinario a -> [a]
 postorden Vacio = []
 postorden (Nodo x izq der) = postorden izq ++ postorden der ++ [x]
 
--- Altura de un árbol
 altura :: ArbolBinario a -> Int
 altura Vacio = 0
 altura (Nodo _ izq der) = 1 + max (altura izq) (altura der)
-
--- Verificar si es un árbol de búsqueda binario
-esABB :: Ord a => ArbolBinario a -> Bool
-esABB Vacio = True
-esABB (Nodo x izq der) =
-    all (< x) (inorden izq) && all (> x) (inorden der) &&
-    esABB izq && esABB der
 \end{lstlisting}
 
 \section{Ejercicios}

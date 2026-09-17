@@ -2,78 +2,36 @@
 
 \section{Representación de Grafos}
 
-\begin{lstlisting}[caption={Representación de grafos en Haskell}, label=lst:rep-grafos]
+\begin{lstlisting}[caption={Representación de grafos en Haskell}]
 type Vertice = Int
 type Grafo = [(Vertice, [Vertice])]
 type GrafoPonderado = [(Vertice, [(Vertice, Int)])]
 
--- Crear un grafo a partir de una lista de aristas
-grafoDesdeAristas :: [Vertice] -> [(Vertice, Vertice)] -> Grafo
-grafoDesdeAristas vertices aristas =
-    [(v, [w | (a, w) <- aristas, a == v] ++ [w | (w, a) <- aristas, a == v]) | v <- vertices]
+grafoDesdeAristas :: [Vertice] -> [(Vertice,Vertice)] -> Grafo
+grafoDesdeAristas vs aristas =
+    [(v, [w | (a,w) <- aristas, a == v] ++ [w | (w,a) <- aristas, a == v]) | v <- vs]
 
--- Crear un grafo dirigido
-grafoDirigido :: [Vertice] -> [(Vertice, Vertice)] -> Grafo
-grafoDirigido vertices aristas =
-    [(v, [w | (a, w) <- aristas, a == v]) | v <- vertices]
-
--- Matriz de adyacencia
-matrizAdyacencia :: Grafo -> [[Int]]
-matrizAdyacencia grafo =
-    let vs = map fst grafo
-        n = length vs
-        esArista u v = elem v (adyacentes u grafo)
-    in [[if esArista i j then 1 else 0 | j <- vs] | i <- vs]
-  where
-    adyacentes v = case lookup v grafo of
-                     Just ady -> ady
-                     Nothing -> []
+grafoDirigido :: [Vertice] -> [(Vertice,Vertice)] -> Grafo
+grafoDirigido vs aristas =
+    [(v, [w | (a,w) <- aristas, a == v]) | v <- vs]
 \end{lstlisting}
 
 \section{Algoritmos de Recorrido}
 
-\begin{lstlisting}[caption={DFS y BFS en Haskell}, label=lst:dfs-bfs]
--- DFS (recursivo)
+\begin{lstlisting}[caption={DFS y BFS en Haskell}]
 dfs :: Vertice -> Grafo -> [Vertice]
 dfs inicio grafo = dfsAux inicio []
   where
-    dfsAux v visitados
-      | v `elem` visitados = visitados
-      | otherwise = foldl (\acc w -> dfsAux w acc) (v:visitados) (adyacentes v grafo)
-    adyacentes v = case lookup v grafo of
-                     Just ady -> ady
-                     Nothing -> []
+    dfsAux v vis
+      | v `elem` vis = vis
+      | otherwise = foldl (\acc w -> dfsAux w acc) (v:vis)
+                    (maybe [] id (lookup v grafo))
 
--- BFS (con cola)
 bfs :: Vertice -> Grafo -> [Vertice]
 bfs inicio grafo = bfsAux [inicio] []
   where
-    bfsAux [] visitados = visitados
-    bfsAux (v:cola) visitados
-      | v `elem` visitados = bfsAux cola visitados
-      | otherwise = bfsAux (cola ++ adyacentes v grafo) (visitados ++ [v])
-    adyacentes v = case lookup v grafo of
-                     Just ady -> ady
-                     Nothing -> []
-\end{lstlisting}
-
-\section{Algoritmos de Caminos Mínimos}
-
-\begin{lstlisting}[caption={Dijkstra en Haskell}, label=lst:dijkstra-hs]
-import Data.Map (Map, fromList, insert, lookup, delete, keys, (!))
-import qualified Data.Map as Map
-import Data.Set (Set, singleton, member, insert, delete, empty)
-import qualified Data.Set as Set
-
-dijkstra :: Vertice -> GrafoPonderado -> Map Vertice Int
-dijkstra inicio grafo = dijkstraAux inicio grafo Map.empty (Set.singleton inicio)
-  where
-    dijkstraAux origen grafo dist pendientes
-      | Set.null pendientes = dist
-      | otherwise =
-          let (u, du) = minimo pendientes dist
-              vecinos = adyacentesConPeso u grafo
-              dist' = actualizar vecinos du dist
-              pendientes' = Set.insert (Set.delete u pendientes) vecinos
-          in dijkstraAux origen grafo dist' pendientes'
+    bfsAux [] vis = vis
+    bfsAux (v:cola) vis
+      | v `elem` vis = bfsAux cola vis
+      | otherwise = bfsAux (cola ++ maybe [] id (lookup v grafo)) (vis ++ [v])
 \end{lstlisting}
